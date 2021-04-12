@@ -5,12 +5,12 @@ let fillVar =0;
 
 function setup(){
 	var cnv = createCanvas(500,800);
-	cnv.parent('container');
-
 	//create video stream w p5 library
 	vidCapture = createCapture(VIDEO);
 	vidCapture.size(vidCapture.width*2,vidCapture.height*3);
 	vidCapture.hide();
+
+	millisRollover = 0;
 
 	//start tracker
 	cTracker = new clm.tracker();
@@ -31,6 +31,7 @@ function draw(){
 	translate(vidCapture.width,0);
 	scale(-1,1);
 
+
 	//image(vidCapture, 0, 0);
 
 	var pos = cTracker.getCurrentPosition();
@@ -40,6 +41,7 @@ function draw(){
 	if(pos){
 		//image(vidCapture, 10, 10);
 
+
 var x1 = pos[62][0]; //x coordinate of nose
 var y1 = pos[62][1]; //y coordinate of nose
 
@@ -47,10 +49,16 @@ var xStartPoint = [200, 400, 200, 400]; //square x coordinates start
 var yStartPoint = [200, 200, 0, 0]; //square y coordinates start
 var fillColours = [p,v,r,b]; //colour variables in array
 
+
+
 for (var a in fillColours)
 {
 	fill(fillColours[a]); //adding fill colors to squares
 	square(xStartPoint[a], yStartPoint[a], sSize); //make square based on x,y and size coordinates defined at the top
+}
+
+if(millis() == 1000){
+	background(random(255),255,255);
 }
 
 fill(0); //if start on no square, circle is black
@@ -69,4 +77,5 @@ fill(fillVar); //keeps last colour
 ellipse(x1,y1, 20); //make circle with last colour
 // cTracker.draw(drawCanvas);
 }
+
 }
